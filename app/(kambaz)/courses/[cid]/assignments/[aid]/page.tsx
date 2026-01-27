@@ -73,14 +73,14 @@ export default function AssignmentEditor() {
                     </tr>
                     <tr>
                         <td>
-                            <label htmlFor="due-date">Available From </label><br /></td>
+                            <label htmlFor="due-date">Available From </label></td>
                         <td> <label htmlFor="until-date">Until </label><br /> </td></tr>
                     <tr><td><input type="date"
                         defaultValue="2000-01-21"
                         id="due-date" />
-                    </td>
-
-                        <td> <input type="date"
+                    
+                        </td><td>
+                         <input type="date"
                             defaultValue="2000-01-21"
                             id="until-date" /></td>
                     </tr>
