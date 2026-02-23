@@ -5,7 +5,7 @@ export default function labs() {
             <h1>Labs, Frank Glantz</h1>
             <h2>Asynchronous Online Section</h2>
             <h2> Click
-                <a style={{ paddingLeft: '4px', paddingRight: '4px' }} href="https://github.com/frankatank4526/kambaz-next-js/tree/a2" id="wd-github">here</a>
+                <a style={{ paddingLeft: '4px', paddingRight: '4px' }} href="https://github.com/frankatank4526/kambaz-next-js/tree/a3" id="wd-github">here</a>
                 for my GitHub repository. </h2>
             <ul>
                 <li>
