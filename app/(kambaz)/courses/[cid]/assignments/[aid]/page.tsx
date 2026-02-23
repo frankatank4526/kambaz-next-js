@@ -1,27 +1,34 @@
+"use client"
+import { useParams } from "next/navigation";
 import { Button, Col, Container, Form, FormCheck, FormControl, FormLabel, FormSelect, Row } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
+import { assignments } from "@/app/(kambaz)/database";
 
 export default function AssignmentEditor() {
+    const { cid, aid } = useParams();
+    const assignment = assignments.find((assignment: any) => assignment.course === cid && assignment._id === aid);
+    
     return (
+
 
         <Container>
             <Row className="justify-content-md-center ">
                 <Col>
                     <FormLabel>Assignment Name</FormLabel>
-                    <FormControl className="mb-3" defaultValue="A1 - ENV + HTML" />
+                    <FormControl className="mb-3" defaultValue={assignment?.title} />
                 </Col>
             </Row>
             <Row className="justify-content-md-center">
                 <Col>
 
-                    <FormControl className="mb-3" as="textarea" rows={5} placeholder="Description of assignment" />
+                    <FormControl className="mb-3" as="textarea" rows={5} placeholder={assignment?.description} />
                 </Col>
 
             </Row>
             <Row className="justify-content-md-center">
                 <Col> <FormLabel className="float-end">Points</FormLabel> </Col>
                 <Col>
-                    <FormControl className="mb-3" type="number" />
+                    <FormControl className="mb-3" type="number" defaultValue={assignment?.points} />
                 </Col>
             </Row>
             <Row className="justify-content-md-center">
@@ -82,35 +89,35 @@ export default function AssignmentEditor() {
             */}
             <Row>
                 <Col>
-                <FormLabel className="float-end">Assign to</FormLabel></Col><Col>
-                <FormControl/></Col>
-                
+                    <FormLabel className="float-end">Assign to</FormLabel></Col><Col>
+                    <FormControl /></Col>
+
             </Row>
             <Row>
                 <Col>
-                <FormLabel>Due</FormLabel>
-                <FormControl className="mb-3"type="date"/></Col>
+                    <FormLabel>Due</FormLabel>
+                    <FormControl className="mb-3" type="date" defaultValue={assignment?.dueDate}/></Col>
             </Row>
-             <Row>
-                <Col>
-                <FormLabel>Available from</FormLabel>
-                <FormControl className="mb-3" type="date"/></Col>
-            </Row>
-             <Row>
-                <Col>
-                <FormLabel>Until</FormLabel>
-                <FormControl className="mb-3" type="date"/></Col>
-            </Row>
-           
             <Row>
-<Col>
-<Button variant="danger" className="me-1 float-end" >
-                                   Save
-                              </Button>
-                              <Button className="btn-secondary me-2 float-end" >
-                                    
-                                    Cancel
-                              </Button></Col>
+                <Col>
+                    <FormLabel>Available from</FormLabel>
+                    <FormControl className="mb-3" type="date" defaultValue={assignment?.availDate}/></Col>
+            </Row>
+            <Row>
+                <Col>
+                    <FormLabel>Until</FormLabel>
+                    <FormControl className="mb-3" type="date" /></Col>
+            </Row>
+
+            <Row>
+                <Col>
+                    <Button href="../assignments" variant="danger" className="me-1 float-end" >
+                        Save
+                    </Button>
+                    <Button href="../assignments" className="btn-secondary me-2 float-end" >
+
+                        Cancel
+                    </Button></Col>
             </Row>
 
         </Container>
