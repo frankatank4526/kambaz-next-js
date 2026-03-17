@@ -5,7 +5,7 @@ import { Suspense, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
+
 export default function UrlEncoding() {
  const [a, setA] = useState("5");
  const [b, setB] = useState("10");
