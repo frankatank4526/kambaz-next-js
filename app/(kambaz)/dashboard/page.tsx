@@ -42,7 +42,7 @@ export default function Dashboard() {
                     {courses.filter((course) =>
                         enrollments.some(
                             (enrollment) => 
-                                enrollment !== null && course !== null &&
+                                currentUser !== null &&
                                 enrollment.user === (currentUser as any)._id &&
                                 enrollment.course === course._id
                         )).map((course) => (
