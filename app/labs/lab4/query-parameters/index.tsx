@@ -5,7 +5,7 @@ import { Suspense, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-
+export const dynamic = "force-dynamic";
 export default function UrlEncoding() {
  const [a, setA] = useState("5");
  const [b, setB] = useState("10");
@@ -49,11 +49,11 @@ export default function UrlEncoding() {
        className="form-control"
      />
      <h4>Programmatic navigation (using router.push):</h4>
-     <Suspense>
+     
      <button onClick={goToQueryVersion} className="btn btn-success w-100">
        {a} + {b} → Query Params (programmatic)
      </button>
-     </Suspense>
+     
      <button onClick={goToPathVersion} className="btn btn-success w-100 mt-2">
        {a} + {b} → Path Params (programmatic)
      </button>
