@@ -13,6 +13,7 @@ import UrlEncoding from "./query-parameters";
 import StringStateVariables from "./StringStateVariables";
 import store from "./store";
 import { Provider } from "react-redux";
+import { Suspense } from "react";
 //import QueryCalculator from "./url-encoding/query-params/page";
 
 export default function Lab4() {
@@ -37,7 +38,9 @@ export default function Lab4() {
                 <ArrayStateVariable />
                 <ParentStateComponent />
                 {/* <QueryCalculator/> */}
+                <Suspense>
                 <UrlEncoding />
+                </Suspense>
                 <Link style={{ fontSize: "30px" }} href="/labs/lab4/redux">Redux Examples</Link> <hr />
                 <Link style={{ fontSize: "30px" }} href="./lab4/react-context">React Context Examples</Link> <hr/>
                  <Link style={{ fontSize: "30px" }} href="./lab4/zustand">Zustand Examples</Link>
