@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import TOC from "./TOC";
 
 
@@ -12,7 +12,7 @@ export default function LabsLayout({
           <td valign="top" width="100px">
             <TOC />
           </td>
-          <td valign="top">{children}</td>
+          <td valign="top"><Suspense>{children}</Suspense></td>
         </tr>
       </tbody>
     </table>
