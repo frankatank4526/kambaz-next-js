@@ -3,34 +3,49 @@ import { useParams } from "next/navigation";
 import { Button, Col, Container, Form, FormCheck, FormControl, FormLabel, FormSelect, Row } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
 import { assignments } from "@/app/(kambaz)/database";
+import "./styles.css"
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
+import { useState } from "react";
+import { addAssignment, updateAssignment } from "../reducer";
+import Link from "next/link";
+
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
+
+    const { assignments } = useSelector((state: RootState) => state.assignmentReducer);
     const assignment = assignments.find((assignment: any) => assignment.course === cid && assignment._id === aid);
-    
+    const dispatch = useDispatch();
+    const [description, setDescription] = useState(assignment? assignment.description: "");
+    const [title, setTitle] = useState(assignment? assignment.title: "");
+    const [points, setPoints] = useState(assignment? assignment.points: 0);
+    const [dueDate, setDueDate] = useState(assignment? assignment.dueDate: "");
+    const [availDate, setAvailDate] = useState(assignment? assignment.availDate: "");
+   
     return (
 
 
-        <Container>
+        <Form >
             <Row className="justify-content-md-center ">
                 <Col>
                     <FormLabel>Assignment Name</FormLabel>
-                    <FormControl className="mb-3" defaultValue={assignment?.title} />
+                    <FormControl onChange={(e) => setTitle(e.target.value)}className="mb-3" defaultValue={assignment?.title} />
                 </Col>
             </Row>
             <Row className="justify-content-md-center">
                 <Col>
 
-                    <FormControl className="mb-3" as="textarea" rows={5} placeholder={assignment?.description} />
+                    <FormControl onChange={(e) => setDescription(e.target.value)}className="mb-3" as="textarea" rows={5} placeholder={assignment?.description} />
                 </Col>
 
             </Row>
-            <Row className="justify-content-md-center">
-                <Col> <FormLabel className="float-end">Points</FormLabel> </Col>
+            <Form.Group as={Row} >
+                <FormLabel sm="8" className="text-sm-end" column htmlFor="points">Points</FormLabel>
                 <Col>
-                    <FormControl className="mb-3" type="number" defaultValue={assignment?.points} />
+                    <FormControl onChange={(e) => setPoints(parseInt(e.target.value))} id="points" className="mb-3 input-field" type="number" defaultValue={assignment?.points} />
                 </Col>
-            </Row>
+            </Form.Group>
             <Row className="justify-content-md-center">
                 <Col>
                     <FormLabel className="float-end">Assignment Group</FormLabel></Col>
@@ -96,12 +111,12 @@ export default function AssignmentEditor() {
             <Row>
                 <Col>
                     <FormLabel>Due</FormLabel>
-                    <FormControl className="mb-3" type="date" defaultValue={assignment?.dueDate}/></Col>
+                    <FormControl onChange={(e) => setDueDate(e.target.value)}className="mb-3" type="date" defaultValue={assignment?.dueDate} /></Col>
             </Row>
             <Row>
                 <Col>
                     <FormLabel>Available from</FormLabel>
-                    <FormControl className="mb-3" type="date" defaultValue={assignment?.availDate}/></Col>
+                    <FormControl onChange={(e) => setAvailDate(e.target.value)} className="mb-3" type="date" defaultValue={assignment?.availDate} /></Col>
             </Row>
             <Row>
                 <Col>
@@ -111,15 +126,20 @@ export default function AssignmentEditor() {
 
             <Row>
                 <Col>
-                    <Button href="../assignments" variant="danger" className="me-1 float-end" >
+                <Link href="../assignments">
+                    <Button onClick={() => assignment? dispatch(updateAssignment({...assignment, title: title, description: description, course: cid, points: points, dueDate: dueDate, availDate: availDate})): 
+                    dispatch(addAssignment({title: title, description: description, course: cid, points: points, dueDate: dueDate, availDate: availDate}))} 
+                    href="../assignments" variant="danger" className="me-1 float-end" >
                         Save
-                    </Button>
-                    <Button href="../assignments" className="btn-secondary me-2 float-end" >
+                    </Button></Link>
+                    <Link href="../assignments">
+                    <Button  className="btn-secondary me-2 float-end" >
 
                         Cancel
-                    </Button></Col>
+                    </Button>
+                    </Link></Col>
             </Row>
 
-        </Container>
+        </Form>
     );
 }

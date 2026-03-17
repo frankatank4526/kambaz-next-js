@@ -52,25 +52,25 @@
     ]
   },
   {
-    "_id": "M103",
+    "_id": "M1035",
     "name": "Nozzle Design",
     "description": "Principles of rocket nozzle design and performance optimization.",
     "course": "RS101",
     "lessons": [
       {
-        "_id": "L301",
+        "_id": "L30122",
         "name": "Nozzle Design",
         "description": "Overview of different types of rocket nozzles.",
         "module": "M103"
       },
       {
-        "_id": "L302",
+        "_id": "L3022232323233232",
         "name": "Nozzle Performance",
         "description": "Understanding nozzle performance and efficiency.",
         "module": "M103"
       },
       {
-        "_id": "L303",
+        "_id": "L30323232322",
         "name": "Nozzle Optimization",
         "description": "Optimizing nozzle design for specific applications.",
         "module": "M103"
