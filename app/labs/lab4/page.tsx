@@ -38,9 +38,9 @@ export default function Lab4() {
                 <ArrayStateVariable />
                 <ParentStateComponent />
                 {/* <QueryCalculator/> */}
-                <Suspense/>
+                
                 <UrlEncoding />
-                <Suspense/>
+                
                 <Link style={{ fontSize: "30px" }} href="/labs/lab4/redux">Redux Examples</Link> <hr />
                 <Link style={{ fontSize: "30px" }} href="./lab4/react-context">React Context Examples</Link> <hr/>
                  <Link style={{ fontSize: "30px" }} href="./lab4/zustand">Zustand Examples</Link>
