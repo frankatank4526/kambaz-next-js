@@ -54,6 +54,9 @@ export default function TOC() {
       <NavItem>
         <NavLink id="wd-github" href="https://github.com/frankatank4526/kambaz-next-js/tree/a5">My GitHub</NavLink>
       </NavItem>
+      <NavItem>
+        <NavLink id="wd-server" href="https://kambaz-node-server-app-frankatank4526.onrender.com">My Render.com Server</NavLink>
+      </NavItem>
     </Nav>
   );
 }
