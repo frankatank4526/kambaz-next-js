@@ -6,8 +6,12 @@ export default function labs() {
             <h2>Asynchronous Online Section</h2>
             <h2> Click
                 <a style={{ paddingLeft: '4px', paddingRight: '4px' }} href="https://github.com/frankatank4526/kambaz-next-js/tree/a5" id="wd-github">here</a>
-                for my GitHub repository. </h2>
+                for my React Project GitHub repository. </h2>
             <ul>
+                <h2> Click
+                <a style={{ paddingLeft: '4px', paddingRight: '4px' }} href="https://github.com/frankatank4526/kambaz-node-server-app" id="wd-github">here</a>
+                for my Node ServerGitHub repository. </h2>
+            <ul></ul>
                 <li>
                     <Link href="/labs/lab1" id="wd-lab1-link">
                         Lab 1: HTML Examples </Link>
