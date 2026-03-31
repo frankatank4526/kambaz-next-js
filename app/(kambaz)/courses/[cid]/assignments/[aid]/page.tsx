@@ -2,14 +2,14 @@
 import { useParams } from "next/navigation";
 import { Button, Col, Container, Form, FormCheck, FormControl, FormLabel, FormSelect, Row } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
-import { assignments } from "@/app/(kambaz)/database";
+//import { assignments } from "@/app/(kambaz)/database";
 import "./styles.css"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
 import { useState } from "react";
-import { addAssignment, updateAssignment } from "../reducer";
+import { addAssignment, updateAssignment, setAssignments } from "../reducer";
 import Link from "next/link";
-
+import * as client from "../../../client";
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
@@ -17,12 +17,22 @@ export default function AssignmentEditor() {
     const { assignments } = useSelector((state: RootState) => state.assignmentReducer);
     const assignment = assignments.find((assignment: any) => assignment.course === cid && assignment._id === aid);
     const dispatch = useDispatch();
-    const [description, setDescription] = useState(assignment? assignment.description: "");
-    const [title, setTitle] = useState(assignment? assignment.title: "");
-    const [points, setPoints] = useState(assignment? assignment.points: 0);
-    const [dueDate, setDueDate] = useState(assignment? assignment.dueDate: "");
-    const [availDate, setAvailDate] = useState(assignment? assignment.availDate: "");
-   
+    const [description, setDescription] = useState(assignment ? assignment.description : "");
+    const [title, setTitle] = useState(assignment ? assignment.title : "");
+    const [points, setPoints] = useState(assignment ? assignment.points : 0);
+    const [dueDate, setDueDate] = useState(assignment ? assignment.dueDate : "");
+    const [availDate, setAvailDate] = useState(assignment ? assignment.availDate : "");
+    const onCreateAssignmentForCourse = async () => {
+        if (!cid) return;
+        const newAssignment = { description: description, title: title, points: points, dueDate: dueDate, availDate: availDate, course: cid };
+        const assignment = await client.createAssignmentForCourse(cid as string, newAssignment);
+        dispatch(setAssignments([...assignments, assignment]));
+    };
+    const onUpdateAssignment = async (assignment: any) => {
+        await client.updateAssignment(assignment);
+        const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a);
+        dispatch(setAssignments(newAssignments));
+    };
     return (
 
 
@@ -30,13 +40,13 @@ export default function AssignmentEditor() {
             <Row className="justify-content-md-center ">
                 <Col>
                     <FormLabel>Assignment Name</FormLabel>
-                    <FormControl onChange={(e) => setTitle(e.target.value)}className="mb-3" defaultValue={assignment?.title} />
+                    <FormControl onChange={(e) => setTitle(e.target.value)} className="mb-3" defaultValue={assignment?.title} />
                 </Col>
             </Row>
             <Row className="justify-content-md-center">
                 <Col>
 
-                    <FormControl onChange={(e) => setDescription(e.target.value)}className="mb-3" as="textarea" rows={5} placeholder={assignment?.description} />
+                    <FormControl onChange={(e) => setDescription(e.target.value)} className="mb-3" as="textarea" rows={5} placeholder={assignment?.description} />
                 </Col>
 
             </Row>
@@ -111,7 +121,7 @@ export default function AssignmentEditor() {
             <Row>
                 <Col>
                     <FormLabel>Due</FormLabel>
-                    <FormControl onChange={(e) => setDueDate(e.target.value)}className="mb-3" type="date" defaultValue={assignment?.dueDate} /></Col>
+                    <FormControl onChange={(e) => setDueDate(e.target.value)} className="mb-3" type="date" defaultValue={assignment?.dueDate} /></Col>
             </Row>
             <Row>
                 <Col>
@@ -126,17 +136,17 @@ export default function AssignmentEditor() {
 
             <Row>
                 <Col>
-                <Link href="../assignments">
-                    <Button onClick={() => assignment? dispatch(updateAssignment({...assignment, title: title, description: description, course: cid, points: points, dueDate: dueDate, availDate: availDate})): 
-                    dispatch(addAssignment({title: title, description: description, course: cid, points: points, dueDate: dueDate, availDate: availDate}))} 
-                    href="../assignments" variant="danger" className="me-1 float-end" >
-                        Save
-                    </Button></Link>
                     <Link href="../assignments">
-                    <Button  className="btn-secondary me-2 float-end" >
+                        <Button onClick={() => assignment ? onUpdateAssignment({ ...assignment, title: title, description: description, course: cid, points: points, dueDate: dueDate, availDate: availDate }) :
+                           onCreateAssignmentForCourse()}
+                            href="../assignments" variant="danger" className="me-1 float-end" >
+                            Save
+                        </Button></Link>
+                    <Link href="../assignments">
+                        <Button className="btn-secondary me-2 float-end" >
 
-                        Cancel
-                    </Button>
+                            Cancel
+                        </Button>
                     </Link></Col>
             </Row>
 

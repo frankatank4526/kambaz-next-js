@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { modules } from "../../../database";
 import { v4 as uuidv4 } from "uuid";
 const initialState = {
-  modules: modules,
+  modules: [],
 };
 const modulesSlice = createSlice({
   name: "modules",
@@ -17,6 +17,9 @@ const modulesSlice = createSlice({
         course: module.course,
       };
       state.modules = [...state.modules, newModule] as any;
+    },
+    setModules: (state, action) => {
+      state.modules = action.payload;
     },
     deleteModule: (state, { payload: moduleId }) => {
       state.modules = state.modules.filter(
@@ -34,6 +37,6 @@ const modulesSlice = createSlice({
     },
   },
 });
-export const { addModule, deleteModule, updateModule, editModule } =
+export const { addModule, deleteModule, updateModule, editModule, setModules } =
   modulesSlice.actions;
 export default modulesSlice.reducer;

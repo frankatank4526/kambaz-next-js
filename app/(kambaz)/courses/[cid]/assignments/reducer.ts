@@ -51,6 +51,9 @@ const assignmentsSlice = createSlice({
                 a._id === assignment._id ? assignment : a
             ) as any;
         },
+        setAssignments: (state, action) => {
+            state.assignments = action.payload;
+        },
         /*
         editAssignment: (state, { payload: assignmentId }) => {
             state.assignments = state.assignments.map((a: any) =>
@@ -60,5 +63,5 @@ const assignmentsSlice = createSlice({
     }
 });
 
-export const {addAssignment, deleteAssignment, updateAssignment} = assignmentsSlice.actions;
+export const { setAssignments, addAssignment, deleteAssignment, updateAssignment } = assignmentsSlice.actions;
 export default assignmentsSlice.reducer;

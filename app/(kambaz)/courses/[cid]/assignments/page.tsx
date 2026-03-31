@@ -11,9 +11,10 @@ import { useParams } from "next/navigation";
 import * as db from "../../../database";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { deleteAssignment } from "./reducer";
-import { useState } from "react";
+import { deleteAssignment, setAssignments } from "./reducer";
+import { useEffect, useState } from "react";
 import DeleteModal from "./deleteModal";
+import * as client from "../../client";
 export default function Assignments() {
 
       const [show, setShow] = useState(false);
@@ -23,6 +24,18 @@ export default function Assignments() {
       const { assignments } = useSelector((state: RootState) => state.assignmentReducer);
       const { cid } = useParams();
       const dispatch = useDispatch();
+
+      const onRemoveAssignment = async (assignmentId: string) => {
+            await client.deleteAssignment(assignmentId);
+            dispatch(setAssignments(assignments.filter((a: any) => a._id !== assignmentId)));
+      };
+      const fetchAssignments = async () => {
+            const assignments = await client.findAssignmentsForCourse(cid as string);
+            dispatch(setAssignments(assignments));
+      };
+      useEffect(() => {
+            fetchAssignments();
+      }, []);
       return (
 
             <Container>
@@ -54,17 +67,18 @@ export default function Assignments() {
                                                 moduleId={module._id} deleteModule={(moduleId) => {
                                                                   dispatch(deleteModule(moduleId)}}/>*/} </div>
                                           <ListGroup className="wd-lessons rounded-0">
-                                                {assignments.filter((assignment: any) => assignment.course === cid)
+                                                {assignments
                                                       .map((assignment: any) => (
                                                             <ListGroupItem className="wd-lesson p-3 ps-1">
                                                                   <div>
                                                                         <BsGripVertical className="me-2 fs-3" /> <LuNotebookPen className="text-success" />
                                                                         <Link href={`/courses/${assignment.course}/assignments/${assignment._id}`} className="assignment-title fw-bold">
                                                                               {assignment.title}</Link>
-                                                                        <FaTrash style={{ float: "right", marginTop: 6 }} className="text-danger me-2 mb-1" onClick={() =>{
+                                                                        <FaTrash style={{ float: "right", marginTop: 6 }} className="text-danger me-2 mb-1" onClick={() => {
                                                                               setAssignmentId(assignment._id);
                                                                               handleShow();
-                                                                               {/*dispatch(deleteAssignment(assignment._id))*/}}} /><LessonControlButtons />
+                                                                              {/*dispatch(deleteAssignment(assignment._id))*/ }
+                                                                        }} /><LessonControlButtons />
                                                                         <div className="description-margin"><span className="description1 fw-normal fs-6">Multiple Modules </span>|
                                                                               <span className="description2 fw-bold fs-6"> Not available until </span>
                                                                               <span className="description2 fs-6">May 6 at 12:00am | </span>
@@ -84,8 +98,8 @@ export default function Assignments() {
                         </div>
 
                   </Row>
-      <DeleteModal show={show} handleClose={handleClose} dialogTitle="Are you sure you want to delete the assignment?"
-        deleteAssignment={() => dispatch(deleteAssignment(assignmentId))} />
+                  <DeleteModal show={show} handleClose={handleClose} dialogTitle="Are you sure you want to delete the assignment?"
+                        deleteAssignment={() => onRemoveAssignment(assignmentId)} />
             </Container>
 
       );
