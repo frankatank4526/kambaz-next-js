@@ -17,6 +17,8 @@ export default function AccountNavigation() {
                         <NavLink as={Link} href={link} active={pathname.endsWith(link)}>
                             {link} </NavLink> </NavItem>
                 ))}
+                {currentUser && currentUser.role === "ADMIN" && (
+                    <NavLink as={Link} href={`/account/users`} active={pathname.endsWith('users')}> Users </NavLink>)}
             </Nav>
             {/* 
             <Link href="signin" id="signin-link" className="list-group-item active border-0"> Signin </Link> <br />
