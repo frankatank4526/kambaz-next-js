@@ -83,7 +83,7 @@ export default function Assignments() {
                                                                               <span className="description2 fw-bold fs-6"> Not available until </span>
                                                                               <span className="description2 fs-6">May 6 at 12:00am | </span>
                                                                               <span className="description2 fw-bold fs-6">Due </span>
-                                                                              <span className="description2 fs-6">May 13 at 11:59pm | {assignment.points} pts</span>
+                                                                              <span className="description2 fs-6">May 13 at 11:59pm | {assignment.points ? assignment.points : 0} pts</span>
 
                                                                         </div> </div>
                                                             </ListGroupItem>

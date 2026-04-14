@@ -9,7 +9,7 @@ export default function CourseNavigation({c_id}: {c_id: string | undefined}) {
   
   const displayLink = (link: string) => {
     return (
-    <Link href = {`/courses/${c_id}/${link.toLowerCase()}${link.toLowerCase()==="people" ? "/table" : ""}`} id="wd-course-modules-link" 
+    <Link href = {`/courses/${c_id}/${link.toLowerCase()}`} id="wd-course-modules-link" 
     className={`list-group-item ${pathName.includes(link.toLowerCase()) ? "active" : "text-danger"} border-0`}>
       {link}
     </Link>
